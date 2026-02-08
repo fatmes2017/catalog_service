@@ -5,5 +5,5 @@ export class Product {
     public readonly price: number,
     public readonly stock: number,
     public readonly id?: number,
-  ) {}
+  ) {};
 };

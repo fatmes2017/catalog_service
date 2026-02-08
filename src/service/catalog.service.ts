@@ -6,10 +6,13 @@ export class CatalogService {
   constructor(repository: ICatalogRepository) {
     this._repository = repository;
   }
-  createProduct(input: any) {}
-  updateProduct(input: any) {}
-  getProducts(limit: number, offset: number) {}
-  getProduct(id: number) {}
-  deleteProduct(id: number) {}
+ async createProduct(input: any) {
+  const data=this._repository.create(input);
+  return data;
+ }
+ async updateProduct(input: any) {}
+ async getProducts(limit: number, offset: number) {}
+ async getProduct(id: number) {}
+ async deleteProduct(id: number) {}
 }
 ;
