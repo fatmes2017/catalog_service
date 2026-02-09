@@ -1,5 +1,6 @@
 //import { faker } from "@faker-js/faker";
 import { ICatalogRepository } from "../../interface/catalogRepository.interface";
+import { Product } from "../../models/product.model";
 import { MockCatalogRepository } from "../../repository/mockCatalog.repository";
 import { CatalogService } from "../catalog.service";
 
@@ -20,9 +21,8 @@ describe("catalogService", () => {
   });
 
   afterEach(() => {
-      repository = {} as MockCatalogRepository;
-    });
-
+    repository = {} as MockCatalogRepository;
+  });
 
   describe("createProduct", () => {
     test("should create product", async () => {
@@ -30,7 +30,7 @@ describe("catalogService", () => {
       const reqBody = mockProduct({
         price: 10, //+faker.commerce.price(),
       });
-      const result = await service.createProduct(reqBody);
+      const result = await service?.createProduct(reqBody);
 
       expect(result).toMatchObject({
         id: expect.any(Number),
@@ -41,9 +41,25 @@ describe("catalogService", () => {
       });
     });
 
-  
-    // test("should throw error with product already exist", () => {
-    //   expect("iphone").toMatch("iphone");
-    // });
+
+    test("should throw error with product already exist", async () => {
+      const service = new CatalogService(repository);
+      const reqBody = mockProduct({
+        price: 10, //+faker.commerce.price(),
+      });
+      jest.spyOn(repository, "create").mockImplementationOnce(() => Promise.resolve({} as Product));
+      await expect(service.createProduct(reqBody)).rejects.toThrow(
+        "unable to create product",
+      );
+    });
+
+
+
+
+
   });
+
+
+
+
 });

@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "keywords": [],
-  "author": "",
+  "author": "AlfredMH",
   "license": "ISC",
   "devDependencies": {
     "@faker-js/faker": "^10.3.0",
