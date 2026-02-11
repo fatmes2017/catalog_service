@@ -1,6 +1,6 @@
 import { ICatalogRepository } from "../interface/catalogRepository.interface";
 import { Product } from "../models/product.model";
-
+import {randNumber } from "@ngneat/falso";
 
 export class MockCatalogRepository implements ICatalogRepository{
     
@@ -8,21 +8,23 @@ export class MockCatalogRepository implements ICatalogRepository{
            const mockProduct =  {
            
              ...data,
-             id:123
+             id:randNumber({ min: 10, max: 1000 })
           }  as Product;
           return Promise.resolve(mockProduct);
     };
     update(data: Product): Promise<Product> {
-        throw new Error("Method not implemented.");
+
+          return Promise.resolve(data as unknown as Product);
     };
     delete(id: any) {
-        throw new Error("Method not implemented.");
+        return Promise.resolve(id);
     };
-    find(): Promise<Product[]> {
-        throw new Error("Method not implemented.");
+    find(limit: number, offset: number): Promise<Product[]> {
+         
+        return Promise.resolve([]);
     };
     findOne(id: number): Promise<Product> {
-        throw new Error("Method not implemented.");
+        return Promise.resolve({id} as unknown as Product);
     };
    
     

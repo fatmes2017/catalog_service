@@ -12,13 +12,35 @@ export class CatalogService {
 
   async createProduct(input: Product) {
    
-       const data = await this._repository?.create(input);
+       const data = await this._repository.create(input);
+       if(!data.id){
+        throw new Error("unable to create product");
+       }
     return data;
    
    
   }
-  async updateProduct(input: any) {}
-  async getProducts(limit: number, offset: number) {}
-  async getProduct(id: number) {}
-  async deleteProduct(id: number) {}
+  async updateProduct(input: any) {
+      const data = await this._repository.update(input);
+
+       if(!data.id){
+        throw new Error("product does not exist");
+       }
+       return data;
+  }
+  //Instead of this we will get products from elastic search
+  async getProducts(limit: number, offset: number) {
+    const products = await this._repository.find(limit,offset);
+    return products;
+  }
+  async getProduct(id: number) {
+    const product = await this._repository.findOne(id);
+    return product;
+  }
+  async deleteProduct(id: number) {
+const response = await this._repository.delete(id);
+//delete record from Elastic search
+    return response;
+
+  }
 }
