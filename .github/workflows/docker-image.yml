@@ -9,9 +9,24 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    
     - name: Checkout code
       uses: actions/checkout@v4
+     - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
     
+    - name: Install dependencies
+      run: |
+        if [ -f "package-lock.json" ]; then
+          npm ci
+        elif [ -f "yarn.lock" ]; then
+          yarn install --frozen-lockfile
+        else
+          npm install
+          
     - name: Run tests
       run: yarn test  | npm test
     
