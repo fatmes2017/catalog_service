@@ -23,16 +23,11 @@ jobs:
         cache: 'npm'
     
     - name: Install dependencies
-      run: |
-        if [ -f "package-lock.json" ]; then
-          npm ci
-        elif [ -f "yarn.lock" ]; then
-          yarn install --frozen-lockfile
-        else
+      run:
           npm install
           
     - name: Run tests
-      run: yarn test  | npm test
+      run: yarn test  | npm run test
     
     - name: Build and push Docker image
       run: |
